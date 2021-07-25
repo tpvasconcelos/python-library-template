@@ -1,0 +1,9 @@
+{
+  "full_name": "Tomas Pereira de Vasconcelos",
+  "email": "tomasvasconcelos1@gmail.com",
+  "github_username": "tpvasconcelos",
+  "pypi_username": "tpvasconcelos",
+  "project_slug": "mypythonpackage",
+  "short_description": "Contains all the boilerplate you need to create a Python package.",
+  "version": "0.1.0"
+}
