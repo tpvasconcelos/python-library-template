@@ -28,6 +28,10 @@
 
 # How to get it?
 
+The source code is currently hosted on GitHub at: <https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}>
+
+Install and update using [pip](https://pip.pypa.io/en/stable/quickstart/):
+
 ```bash
 pip install {{cookiecutter.project_slug}}
 ```
