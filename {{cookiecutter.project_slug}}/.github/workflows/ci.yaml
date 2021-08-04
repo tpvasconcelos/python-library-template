@@ -1,4 +1,4 @@
-{% raw %}
+{% raw -%}
 name: CI
 
 on:
@@ -74,4 +74,4 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage.xml
-{% endraw %}
+{% endraw -%}
