@@ -9,8 +9,9 @@
 # exclude everything under
 .idea/*
 # except for...
+!.idea/misc.xml
+!.idea/modules.xml
 !.idea/{{cookiecutter.project_slug}}.iml
-
 
 # ============================================================================
 #  My custom additions missing from

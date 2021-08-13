@@ -1,4 +1,5 @@
-"""Exceptions used by {{ cookiecutter.project_slug | capfirst }}"""
+"""Exceptions used by {{cookiecutter.project_slug}}"""
 
-class {{ cookiecutter.project_slug | capfirst }}Error:
-    """Base exception class for all {{ cookiecutter.project_slug | capfirst }} errors."""
+
+class {{ cookiecutter.project_slug | title }}Error(Exception):
+    """Base exception class for all {{cookiecutter.project_slug}} errors."""

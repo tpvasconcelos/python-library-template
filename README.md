@@ -7,11 +7,16 @@
    cookiecutter gh:tpvasconcelos/python-library-template
    ```
 3. Run `git init` to initialise a new git repository
+   - You may also issue your first commit
+     ```shell
+     git add -A && git commit -m "Generate initial project structured (generated from tpvasconcelos/python-library-template)"
+     ```
 4. Run `make init` to install a new virtual environment and all it's dependencies
 5. Make sure you always work within this virtual environment (`source .venv/bin/activate`). Alternatively, you
    can also set up your IDE to always point to the correct python interpreter.
     - In PyCharm, open `Preferences -> Project -> Project Interpreter` and point the python interpreter
       to `.venv/bin/python`.
+6.
 
 ## API Tokens
 
