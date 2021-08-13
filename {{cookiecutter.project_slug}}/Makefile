@@ -31,7 +31,7 @@ BASE_PYTHON	?= python3.7
 # Virtual environment
 VENV_PATH	= .venv
 VENV_BIN	= $(VENV_PATH)/bin
-PYTHON		= $(VENV_BIN)/python
+VENV_PYTHON	= $(VENV_BIN)/python
 
 
 # ==============================================================
@@ -50,24 +50,24 @@ venv-init: clean-venv ## create a virtual environment
 
 .PHONY: install
 install: ## install the package in editable mode and install all pre-commit hooks
-	$(PYTHON) -m pip install --upgrade pip setuptools wheel
-	$(PYTHON) -m pip install -e ".[dev]"
-	$(PYTHON) -m pre_commit install --install-hooks --overwrite
+	$(VENV_PYTHON) -m pip install --upgrade pip setuptools wheel
+	$(VENV_PYTHON) -m pip install -e ".[dev]"
+	$(VENV_PYTHON) -m pre_commit install --install-hooks --overwrite
 
 
 .PHONY: jupyter-init
 jupyter-init: ## initialise a jupyterlab environment and install extensions
-	$(PYTHON) -m pip install -e ".[notebook]"
-	$(PYTHON) -m ipykernel install --user --name="{{cookiecutter.project_slug}}"
-	$(PYTHON) -m jupyter lab build
+	$(VENV_PYTHON) -m pip install -e ".[notebook]"
+	$(VENV_PYTHON) -m ipykernel install --user --name="{{cookiecutter.project_slug}}"
+	$(VENV_PYTHON) -m jupyter lab build
 
 
 .PHONY: jupyter-plotly
 jupyter-plotly: ## setup jupyterlab's plotly extensions
-	$(PYTHON) -m jupyter labextension install @jupyter-widgets/jupyterlab-manager \
+	$(VENV_PYTHON) -m jupyter labextension install @jupyter-widgets/jupyterlab-manager \
                                               jupyterlab-plotly \
                                               plotlywidget
-	$(PYTHON) -m jupyter lab build
+	$(VENV_PYTHON) -m jupyter lab build
 
 
 # ==============================================================
@@ -81,7 +81,7 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	#sphinx-apidoc -o docs/ {{cookiecutter.project_slug}}
 	$(MAKE) --directory=docs clean
 	$(MAKE) --directory=docs html
-	$(PYTHON) "scripts/open_in_browser.py" "docs/build/html/index.html"
+	$(VENV_PYTHON) "scripts/open_in_browser.py" "docs/build/html/index.html"
 
 
 .PHONY: servedocs
@@ -91,18 +91,18 @@ servedocs: docs ## compile the docs watching for changes
 
 .PHONY: dist
 dist: clean-build ## builds source and wheel package
-	$(PYTHON) setup.py sdist bdist_wheel
-	$(PYTHON) -m twine check --strict dist/*
+	$(VENV_PYTHON) setup.py sdist bdist_wheel
+	$(VENV_PYTHON) -m twine check --strict dist/*
 
 
 .PHONY: release-test
 release-test: dist ## package and upload a release to test pypi
-	$(PYTHON) -m twine upload --repository testpypi dist/*
+	$(VENV_PYTHON) -m twine upload --verbose --repository testpypi dist/*
 
 
 .PHONY: release-prod
 release-prod: dist ## package and upload a release prod pypi
-	$(PYTHON) -m twine upload dist/*
+	$(VENV_PYTHON) -m twine upload --verbose dist/*
 
 
 # ==============================================================

@@ -1,20 +1,42 @@
 # Contributing
 
-Thanks for taking the time and considering contributing to `{{cookiecutter.project_slug}}`! 🚀
+Thank you for your interest in contributing to {{cookiecutter.project_slug}}! 🚀
+
+The contribution process for {{cookiecutter.project_slug}} should start with
+[filing a GitHub issue](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}/issues/new/choose)
+. We define three main categories of issues, and each category has its own GitHub issue template
+
+- ⭐ Feature requests
+- 🐛 Bug reports
+- 📚 Documentation fixes
+
+After the implementation strategy has been agreed on by a {{cookiecutter.project_slug}} committer, the next
+step is to introduce your changes as a pull request (see
+[Submitting a Pull Request](#submitting-a-pull-request)) against the {{cookiecutter.project_slug}} repository.
+Once your pull request is merged, your changes will be automatically included in the next
+{{cookiecutter.project_slug}} release. Every change should be listed in the
+{{cookiecutter.project_slug}} [Release Notes](CHANGES.md).
 
 The following is a set of (slightly opinionated) rules and general guidelines for contributing to
-`{{cookiecutter.project_slug}}`. Emphasis on **guidelines**, not _rules_. Use your best judgment, and feel
-free to propose changes to this document in a pull request.
+{{cookiecutter.project_slug}}. Emphasis on **guidelines**, not _rules_. Use your best judgment, and feel free
+to propose changes to this document in a pull request.
 
-Examples of contributions include:
+## Table of Contents
 
-- Code patches
-- Documentation improvements
-- Bug reports and patch reviews
-
-## Code of Conduct
-
-Please remember to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). 🤝
+- [Development environment](#development-environment)
+- [Submitting a Pull Request](#submitting-a-pull-request)
+- [Continuous Integration](#continuous-integration)
+    - [Running it locally](#running-it-locally)
+        - [Tests and coverage reports](#tests-and-coverage-reports)
+        - [Linting](#linting)
+    - [GitHub Actions](#github-actions)
+    - [Tools and software](#tools-and-software)
+- [Project structure](#project-structure)
+    - [Community health files](#community-health-files)
+    - [Configuration files](#configuration-files)
+- [Release process](#release-process)
+    - [Release steps](#release-steps)
+- [Code of Conduct](#code-of-conduct)
 
 ## Development environment
 
@@ -22,14 +44,26 @@ Here are some guidelines for setting up your development environment. Most of th
 away using the [`make`](https://en.wikipedia.org/wiki/Make_(software)) build automation tool. Feel free to
 peak inside [`Makefile`](Makefile) at any time to see exactly what is being run, and in which order.
 
-First, you will need to clone this repository. For instance (using SSH)
+First, you will need to
+[clone](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#step-2-create-a-local-clone-of-your-fork)
+this repository. For this, make sure you have a [GitHub account](https://github.com/join), fork
+{{cookiecutter.project_slug}} to your GitHub account by clicking the
+[Fork](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}/fork) button, and
+clone the main repository locally (e.g. using SSH)
 
 ```shell
 git clone git@github.com:{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}.git
 cd {{cookiecutter.project_slug}}
 ```
 
-The following command will 1) create a new virtual environment, 2) install `{{cookiecutter.project_slug}}`
+You will also need to add your fork as a remote to push your work to. Replace `{username}` with your GitHub
+username.
+
+```shell
+git remote add fork git@github.com:{username}/{{cookiecutter.project_slug}}.git
+```
+
+The following command will 1) create a new virtual environment, 2) install {{cookiecutter.project_slug}}
 in [editable mode](https://pip.pypa.io/en/stable/cli/pip_install/#install-editable) (along with all it's
 dependencies), and 3) set up and install all [pre-commit hooks](https://pre-commit.com/). The default path to
 the virtual environment is `.venv`, which is ignored by all Continuous Integration tools used in this project.
@@ -59,6 +93,45 @@ notebook, just run
 ```shell
 make jupyter-plotly
 ```
+
+## Submitting a Pull Request
+
+1. Always confirm that you have properly configured your Git username and email.
+   ```shell
+   git config --global user.name 'Your real name'
+   git config --global user.email 'Your email address'
+   ```
+2. Each release series has its own branch (i.e. `MAJOR.MINOR.x`). If submitting a documentation or bug fix
+   contribution, branch off of the latest release series branch.
+   ```shell
+   git fetch origin
+   git checkout -b <YOUR-BRANCH-NAME> origin/2.0.x
+   ```
+   Otherwise, if submitting a new feature or API change, branch off of the "master" branch
+   ```shell
+   git fetch origin
+   git checkout -b <YOUR-BRANCH-NAME> origin/main
+   ```
+3. Apply and commit your changes.
+4. Include tests that cover any code changes you make, and make sure the test fails without your patch.
+5. Add an entry to [`CHANGES.md`](CHANGES.md) summarising the changes in this pull request. The entry should
+   follow the same style and format as other entries, i.e.
+   > `- Your summary here. (#XXX)`
+
+   where `#XXX` should link to the relevant pull request. If you think that the changes in this pull request
+   do not warrant a changelog entry, please state it in your pull request's description. In such cases, a
+   maintainer should add a `skip news` label to make CI pass.
+6. Make sure all integration approval steps are passing locally (i.e., `tox`).
+7. Push your changes to your fork
+   ```shell
+   git push --set-upstream fork <YOUR-BRANCH-NAME>
+   ```
+8. [Create a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
+   . Remember to update the pull request's description with relevant notes on the changes implemented, and to
+   [link to relevant issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
+   (e.g., `fixes #XXX` or `closes #XXX`).
+9. Wait for all remote CI checks to pass and for a {{cookiecutter.project_slug}} contributor to approve your
+   pull request.
 
 ## Continuous Integration
 
@@ -184,4 +257,50 @@ on [Continuous Integration](#continuous-integration).
   [`pytest`](https://github.com/pytest-dev/pytest), and
   [`coverage`](https://coverage.readthedocs.io/en/latest/index.html).
 
-test
+## Release process
+
+- {{cookiecutter.project_slug}} uses the [SemVer](https://semver.org/) (`MAJOR.MINOR.PATCH`) versioning
+  standard.
+- You can determine the latest release version by running `git describe --tags --abbrev=0` on the master
+  branch.
+
+### Release steps
+
+1. Review the `## Unreleased changes` section in [`CHANGES.md`](CHANGES.md) by checking for consistency in
+   format and, if necessary, refactoring related entries into relevant subsections (e.g. Features, Docs,
+   Bugfixes, Security, etc).
+   - Submit a pull request with these changes. You may use the `"Update release notes for X.X.X release"`
+   template for the pull request title.
+2. Use the [`bumpversion`](https://github.com/peritus/bumpversion) utility to bump the current version. This
+   utility will automatically bump the current version, and issue a relevant commit and git tag. E.g.,
+   ```shell
+   # Bump MAJOR version
+   bumpversion major
+
+   # Bump MINOR version
+   bumpversion minor
+
+   # Bump PATCH version
+   bumpversion patch
+   ```
+   You can always perform a dry-run to see what will happen under the hood.
+   ```shell
+   bumpversion --dry-run --verbose [major,minor,patch]
+   ```
+3. Push your changes along with all tag references:
+   ```shell
+   git push --tags
+   ```
+4. Open a pull request titled `"Release version X.X.X"`
+5. Wait for all CI checks to pass.
+6. A {{cookiecutter.project_slug}} main contributor should sign off and merge this the pull requests.
+7. Create a new release using the GitHub UI.
+    - Copy the raw markdown section in `CHANGES.md` corresponding to this release and use it as the
+      description of the GitHub Release.
+    - Use the same `X.X.X` tag used in the release.
+8. At this point a GitHub Actions workflow will be triggered which will build and publish new wheels to PyPI.
+   Be sure to check whether all workflows passed successfully.
+
+## Code of Conduct
+
+Please remember to read and follow our [Code of Conduct](CODE_OF_CONDUCT.md). 🤝
