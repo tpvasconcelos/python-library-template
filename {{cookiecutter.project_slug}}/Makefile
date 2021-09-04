@@ -39,11 +39,30 @@ VENV_PYTHON	= $(VENV_BIN)/python
 # ==============================================================
 
 .PHONY: init
-init: clean-all venv-init install ## initialise development environment
+GIT_INITIALISED = "$((git rev-parse --is-inside-work-tree > /dev/null 2>&1 && echo true) || false)"
+ifeq ($(GIT_INITIALISED), true)
+init: init-dev ## [if inside git working tree] initialise development environment
+else
+init:  git-init init-dev ## [if not inside git working tree] initialise git repository and development environment
+endif
 
 
-.PHONY: venv-init
-venv-init: clean-venv ## create a virtual environment
+.PHONY: git-init
+git-init: ## initialize git repository
+	git init
+	git add --all
+	git commit -m "Generate initial project structure (cookiecutter gh:tpvasconcelos/python-library-template)"
+	git remote add origin git@github.com:{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}.git
+	git branch -M master
+	git push -u origin master
+
+
+.PHONY: init-dev
+init-dev: clean-all init-venv install ## initialise development environment
+
+
+.PHONY: init-venv
+init-venv: clean-venv ## create a virtual environment
 	$(BASE_PYTHON) -m pip install --upgrade pip
 	$(BASE_PYTHON) -m venv "$(VENV_PATH)"
 
@@ -55,8 +74,8 @@ install: ## install the package in editable mode and install all pre-commit hook
 	$(VENV_PYTHON) -m pre_commit install --install-hooks --overwrite
 
 
-.PHONY: jupyter-init
-jupyter-init: ## initialise a jupyterlab environment and install extensions
+.PHONY: init-jupyter
+init-jupyter: ## initialise a jupyterlab environment and install extensions
 	$(VENV_PYTHON) -m pip install -e ".[notebook]"
 	$(VENV_PYTHON) -m ipykernel install --user --name="{{cookiecutter.project_slug}}"
 	$(VENV_PYTHON) -m jupyter lab build
@@ -89,19 +108,19 @@ servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) --directory=docs html' -R -D .
 
 
-.PHONY: dist
-dist: clean-build ## builds source and wheel package
-	$(VENV_PYTHON) setup.py sdist bdist_wheel
+.PHONY: build
+build: clean-build ## builds source and wheel package
+	$(VENV_PYTHON) -m build
 	$(VENV_PYTHON) -m twine check --strict dist/*
 
 
 .PHONY: release-test
-release-test: dist ## package and upload a release to test pypi
+release-test: build ## package and upload a release to test pypi
 	$(VENV_PYTHON) -m twine upload --verbose --repository testpypi dist/*
 
 
 .PHONY: release-prod
-release-prod: dist ## package and upload a release prod pypi
+release-prod: build ## package and upload a release prod pypi
 	$(VENV_PYTHON) -m twine upload --verbose dist/*
 
 
