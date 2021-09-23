@@ -76,26 +76,11 @@ interpreter to `.venv/bin/python`.
 make init
 ```
 
-The default and **recommended** base python is `python3.7` . You can change this by exporting the
-`BASE_PYTHON` environment variable. For instance, you could instead run:
-
-```shell
-BASE_PYTHON=python3.8 make init
-```
-
 If you need to use jupyter-lab, you can install all extra requirements, as well as set up the environment and
 jupyter kernel with
 
 ```shell
 make init-jupyter
-```
-
-**Bonus:** If you need to use
-[plotly inside a jupyter-lab](https://plotly.com/python/getting-started/#jupyterlab-support)
-notebook, just run
-
-```shell
-make jupyter-plotly
 ```
 
 ## Pull Request Workflow

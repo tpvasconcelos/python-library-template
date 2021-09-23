@@ -1,36 +1,18 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-added-large-files
         args: ['--maxkb=500']
-      - id: check-ast
-      - id: check-builtin-literals
       - id: check-case-conflict
-      - id: check-docstring-first
       - id: check-executables-have-shebangs
-      - id: check-json
       - id: check-merge-conflict
       - id: check-symlinks
-      - id: check-toml
       - id: check-vcs-permalinks
-      - id: check-xml
-      - id: check-yaml
-      - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: fix-byte-order-marker
       - id: mixed-line-ending
-      - id: name-tests-test
-        args: ['--django']
-      - id: pretty-format-json
-        args: ['--autofix']
       - id: trailing-whitespace
-
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v2.10.0
-    hooks:
-      - id: pyupgrade
-        args: [ --py36-plus, --keep-runtime-typing]
-        description: Automatically upgrade syntax for newer versions of the python language.
+        exclude: .bumpversion.cfg

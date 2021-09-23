@@ -25,10 +25,8 @@ help:
 # ---  Variables
 # ==============================================================
 
-# Adjustable through export
-BASE_PYTHON	?= python3.7
+BASE_PYTHON	= python3.7
 
-# Virtual environment
 VENV_PATH	= .venv
 VENV_BIN	= $(VENV_PATH)/bin
 VENV_PYTHON	= $(VENV_BIN)/python
@@ -78,14 +76,6 @@ install: ## install the package in editable mode and install all pre-commit hook
 init-jupyter: ## initialise a jupyterlab environment and install extensions
 	$(VENV_PYTHON) -m pip install -e ".[notebook]"
 	$(VENV_PYTHON) -m ipykernel install --user --name="{{cookiecutter.project_slug}}"
-	$(VENV_PYTHON) -m jupyter lab build
-
-
-.PHONY: jupyter-plotly
-jupyter-plotly: ## setup jupyterlab's plotly extensions
-	$(VENV_PYTHON) -m jupyter labextension install @jupyter-widgets/jupyterlab-manager \
-                                              jupyterlab-plotly \
-                                              plotlywidget
 	$(VENV_PYTHON) -m jupyter lab build
 
 
