@@ -2,18 +2,19 @@
 
 ## First steps
 
-First, you will want to get your development environment up and running. This includes integrating you local
+First, you will want to get your development environment up and running. This includes integrating your local
 repository with a remote GitHub repository. If you haven't already, create a
 [new GitHub repository](https://github.com/new) to host your project. Name it `{{cookiecutter.project_slug}}`,
 such that the final URL points to:
 <https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_slug}}>
 
-Using the [make](https://en.wikipedia.org/wiki/Make_(software)) build automation tool, with a single command
-you can 1) initialise your local git repository and sync it with the remote on GitHub, 2) create a new virtual
-environment (under `.venv`), 3) install your project in
+Using the [Make](https://en.wikipedia.org/wiki/Make_(software)) build automation tool together with the
+Makefile provided in this template, you will be able to 1) initialise your local git repository and sync it
+with the remote on GitHub, 2) create a new virtual environment (under `.venv`), 3) install your project in
 [editable mode](https://pip.pypa.io/en/stable/cli/pip_install/#install-editable) (along with all dev
 dependencies), and 4) set up and install all [pre-commit hooks](https://pre-commit.com/). Feel free to peak
-inside the `Makefile` at any time to see exactly what is being run, and in which order. Then, simply run
+inside the `Makefile` at any time to see exactly what is being run, and in which order. Then, using a single
+command, run
 
 ```shell
 make init
@@ -34,14 +35,13 @@ isolated environments for each CI step.
 - [ ] Set up automatic deletion of merged branches
   ([guide](https://docs.github.com/en/github/administering-a-repository/configuring-pull-request-merges/managing-the-automatic-deletion-of-branches))
 - [ ] Set up the following branch protection rules to `develop` and `master` branches
-  ([guide](https://docs.github.com/en/github/administering-a-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)).
-  You can use this ~pattern~
+  ([guide](https://docs.github.com/en/github/administering-a-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule))
+  . You can use this ~pattern~
   [hack](https://stackoverflow.com/questions/53135414/how-to-apply-github-branch-rules-to-two-branches) to
   match both branches`[dm][ea][vs]*`
-  - [ ] Require at least one pull request review from a code-owner before merging
-  - [ ] Require status checks to pass before merging
-  - [ ] Require conversation resolution before merging
-
+    - [ ] Require at least one pull request review from a code-owner before merging
+    - [ ] Require status checks to pass before merging
+    - [ ] Require conversation resolution before merging
 
 ## Publishing to PyPi
 

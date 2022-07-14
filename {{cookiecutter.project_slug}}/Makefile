@@ -46,7 +46,7 @@ endif
 
 
 .PHONY: git-init
-git-init: ## initialize git repository
+git-init: ## initialise git repository
 	git init
 	git add --all
 	git commit -m "Generate initial project structure (cookiecutter gh:tpvasconcelos/python-library-template)"

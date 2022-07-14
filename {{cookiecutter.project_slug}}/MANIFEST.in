@@ -1,14 +1,29 @@
-include VERSION
+# Top-level dir files not included by default
+include CHANGES.md
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
 include LICENSE
+include Makefile
+include MANIFEST.in
+include mypy.ini
+include pyproject.toml
 include README.md
-include CHANGELOG.md
-include AUTHORS.md
+include setup.cfg
+include setup.py
+include tox.ini
 
-recursive-include {{cookiecutter.project_slug}} *
-recursive-include tests *
-recursive-include examples *
-recursive-include docs *
+# Misc directories
+recursive-include examples *.py *.ipynb
+recursive-include requirements *.txt *.in
+recursive-include tests *.py
+recursive-include docs *.png *.svg
 
-recursive-exclude * *.py[co]
-recursive-exclude * __pycache__
-recursive-exclude * *.egg-info
+# Include typing stubs
+recursive-include src py.typed *.pyi
+
+# Excluded directories
+recursive-exclude .idea *
+recursive-exclude .github *
+
+# Globally excluded file patterns
+recursive-exclude * *.py[cod] *.egg-info __pycache__

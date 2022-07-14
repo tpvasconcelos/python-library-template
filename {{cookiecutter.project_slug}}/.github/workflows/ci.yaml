@@ -9,6 +9,7 @@ on:
       - assets/**
       - .editorconfig
       - .gitignore
+      - CHANGES.md
       - CODE_OF_CONDUCT.md
       - CONTRIBUTING.md
       - Makefile
@@ -18,6 +19,7 @@ on:
       - assets/**
       - .editorconfig
       - .gitignore
+      - CHANGES.md
       - CODE_OF_CONDUCT.md
       - CONTRIBUTING.md
       - Makefile
